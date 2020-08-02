@@ -120,30 +120,6 @@ public class TravellingRobot {
             positionY = y;
             direction = d;
         }
-
-        public int getPositionX() {
-            return positionX;
-        }
-
-        public void setPositionX(int positionX) {
-            this.positionX = positionX;
-        }
-
-        public int getPositionY() {
-            return positionY;
-        }
-
-        public void setPositionY(int positionY) {
-            this.positionY = positionY;
-        }
-
-        public char getDirection() {
-            return direction;
-        }
-
-        public void setDirection(char direction) {
-            this.direction = direction;
-        }
     }
 
     public enum Directions {
