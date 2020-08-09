@@ -1,5 +1,6 @@
 import org.junit.Test;
 import org.junit.Assert;
+import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,33 +9,48 @@ public class TravellingRobotTest {
 
     @Test
     public void ApplyLeftMovementShouldAffectXWhenFacingNorth() {
-        TravellingRobot.Position position = new TravellingRobot.Position(1, 1, 'N');
+        Position position = new Position(1, 1, Directions.NORTH.value);
+        Robot robot = Mockito.spy(new Robot());
+        Mockito.doReturn(4).when(robot).getyTiles();
+        Mockito.doReturn(4).when(robot).getxTiles();
         Assert.assertEquals(
-                TravellingRobot.applyMovement('L', position, 4, 4).positionX,
+                robot.applyMovement('L', position).getPositionX(),
                 0);
     }
 
     @Test
     public void ApplyForwardMovementShouldAffectYWhenFacingSouth() {
-        TravellingRobot.Position position = new TravellingRobot.Position(1, 1, 'S');
+        Position position = new Position(1, 1, Directions.SOUTH.value);
+        Robot robot = Mockito.spy(new Robot());
+        Mockito.doReturn(4).when(robot).getyTiles();
+        Mockito.doReturn(4).when(robot).getxTiles();
+
         Assert.assertEquals(
-                TravellingRobot.applyMovement('F', position, 4, 4).positionY,
+                robot.applyMovement('F', position).getPositionY(),
                 0);
     }
 
     @Test
     public void ApplyRightMovementShouldAffectYWhenFacingWest() {
-        TravellingRobot.Position position = new TravellingRobot.Position(1, 1, 'W');
+        Position position = new Position(1, 1, Directions.WEST.value);
+        Robot robot = Mockito.spy(new Robot());
+        Mockito.doReturn(4).when(robot).getyTiles();
+        Mockito.doReturn(4).when(robot).getxTiles();
+
         Assert.assertEquals(
-                TravellingRobot.applyMovement('R', position, 4, 4).positionY,
+                robot.applyMovement('R', position).getPositionY(),
                 2);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void ApplyingCommandsThatWouldExceedRoomShouldThrowException() {
-        TravellingRobot.Position position = new TravellingRobot.Position(1, 1, 'W');
+        Position position = new Position(1, 1, Directions.WEST.value);
+        Robot robot = Mockito.spy(new Robot());
+        Mockito.doReturn(4).when(robot).getyTiles();
+        Mockito.doReturn(4).when(robot).getxTiles();
+
         List<Character> commands = "RFFFFFF".chars().mapToObj(ch -> (char) ch).collect(Collectors.toList());
         for (char command : commands)
-            position = TravellingRobot.applyMovement(command, position, 4, 4);
+            position = robot.applyMovement(command, position);
     }
 }
